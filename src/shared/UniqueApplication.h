@@ -11,7 +11,9 @@
 #include "LocalJsonClient.h"
 #include "utils/Utils.h"
 
-#define SOCKET_NAME "pmpUniqueApplication"
+#include <stdlib.h>
+
+#define SOCKET_NAME "jmpUniqueApplication"
 
 class UniqueApplication : public QObject
 {
@@ -19,7 +21,7 @@ class UniqueApplication : public QObject
 public:
   explicit UniqueApplication(QObject* parent = nullptr, const QString& socketname = SOCKET_NAME) : QObject(parent)
   {
-    m_socketName = socketname;
+    m_socketName = socketname.append(QString("_%1").arg(rand()));;
   }
 
   void listen()

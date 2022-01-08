@@ -13,6 +13,8 @@
 #include "Names.h"
 #include "Version.h"
 
+#include <stdlib.h>
+
 /////////////////////////////////////////////////////////////////////////////////////////
 static QDir writableLocation(QStandardPaths::StandardLocation loc)
 {
@@ -94,16 +96,17 @@ QString Paths::logDir(const QString& file)
 QString Paths::socketName(const QString& serverName)
 {
   QString userName = qgetenv("USER");
+  static int uniqueNum = rand();
 
   if(userName.isEmpty())
     userName = qgetenv("USERNAME");
   if(userName.isEmpty())
-    userName = "unknown";
+    userName = "unknown";  
 
 #ifdef Q_OS_UNIX
-  return QString("/tmp/jmp_%1_%2.sock").arg(serverName).arg(userName);
+  return QString("/tmp/jmp_%1_%2_%3.sock").arg(serverName).arg(userName).arg(uniqueNum);
 #else
-  return QString("jmp_%1_%2.sock").arg(serverName).arg(userName);
+  return QString("jmp_%1_%2_%3.sock").arg(serverName).arg(userName).arg(uniqueNum);
 #endif
 }
 
