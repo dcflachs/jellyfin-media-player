@@ -21,7 +21,7 @@ class UniqueApplication : public QObject
 public:
   explicit UniqueApplication(QObject* parent = nullptr, const QString& socketname = SOCKET_NAME) : QObject(parent)
   {
-    m_socketName = socketname.append(QString("_%1").arg(rand()));;
+    m_socketName = socketname;
   }
 
   void listen()
