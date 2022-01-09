@@ -8,12 +8,11 @@
 #include <QDir>
 #include <QStandardPaths>
 #include <QGuiApplication>
+#include <QRandomGenerator>
 #include <QsLog.h>
 #include <QtGui/qguiapplication.h>
 #include "Names.h"
 #include "Version.h"
-
-#include <stdlib.h>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 static QDir writableLocation(QStandardPaths::StandardLocation loc)
@@ -96,7 +95,7 @@ QString Paths::logDir(const QString& file)
 QString Paths::socketName(const QString& serverName)
 {
   QString userName = qgetenv("USER");
-  static int uniqueNum = rand();
+  static int uniqueNum = QRandomGenerator::global()->bounded(16384);
 
   if(userName.isEmpty())
     userName = qgetenv("USERNAME");
